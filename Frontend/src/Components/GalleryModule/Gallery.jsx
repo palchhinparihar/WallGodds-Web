@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import MobileIcon from "./GallaryAssets/mobile.svg";
 import TabletIcon from "./GallaryAssets/tablet.svg";
 import LaptopIcon from "./GallaryAssets/laptop.svg";
@@ -17,7 +17,10 @@ import Spiritual from "./categorieItems/Spiritual.svg";
 import Music from "./categorieItems/Music.svg";
 import AIGen from "./categorieItems/AIGen.svg";
 import Desktop from "./DesktopSection/Desktop";
+
 import Mobile from "./MobileSection/Mobile";
+
+import Tablet from "./TabletSection/Tablet";
 
 import Styles from "./Gallery.module.css";
 import NavBar from "../CommonModule/NavBarModule/NavBar";
@@ -135,6 +138,10 @@ const Gallery = () => {
 
         {activeDevice === "desktop" && <Desktop />}
         {activeDevice === "mobile" && <Mobile />}
+        <Routes>
+          <Route path="desktop" element={<Desktop />} />
+          <Route path="tablet" element={<Tablet />} />
+        </Routes>
 
         <div className={Styles.footerWrapper}>
           <Footer />
