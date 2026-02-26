@@ -126,10 +126,11 @@
 :global(.dark-theme) .temp {
   border-radius: 0.92675rem;
   opacity: 1;
-  background:transparent;
+  background: transparent;
   backdrop-filter: none;
 }
-:global(.dark-theme) .categoryTitle{
+
+:global(.dark-theme) .categoryTitle {
   color: #fff;
 }
 
@@ -139,7 +140,7 @@
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin: 10px 0px 15px 0px ;
+  margin: 10px 0px 15px 0px;
   position: relative;
   z-index: 100;
 }
@@ -194,7 +195,7 @@
 
 /* mobile media queries — same */
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .navbarWrapper {
     display: none;
   }
@@ -224,4 +225,3 @@
     padding-top: 0;
   }
 }
-

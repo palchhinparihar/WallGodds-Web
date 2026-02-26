@@ -31,6 +31,7 @@
 .navigation .menu {
     list-style: none;
     display: flex;
+    align-items: center;
     color: black;
     font-size: 1.46644rem;
     font-style: normal;
@@ -40,6 +41,8 @@
     gap: 1.5rem;
     cursor: pointer;
 }
+
+
 
 .navigation .menu a {
     text-decoration: none;
@@ -67,11 +70,18 @@
     color: inherit;
     position: relative;
     padding-bottom: 0.5rem;
+    padding-right: 0.6rem;
+    font-size: inherit;
     transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .github_arrow {
-    margin: 0 0 0.5rem 0.25rem;
+    width: 6px;
+    height: 7.75px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-shrink: 0;
     transition:
         opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -103,6 +113,7 @@
         box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
         width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .actions .search.open {
     width: 22.8125rem;
 }
@@ -148,6 +159,7 @@
 .actions .searchInput {
     background: none;
 }
+
 .searchInput::placeholder {
     color: #808080;
     opacity: 1;
@@ -261,7 +273,6 @@
         height: 3.2rem !important;
         width: auto !important;
         max-width: 100%;
-        border-radius: 0.489rem;
         flex-shrink: 1;
     }
 
@@ -319,7 +330,7 @@
         align-items: center !important;
     }
 
-    .actions .theme > * {
+    .actions .theme>* {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -405,6 +416,103 @@
     }
 }
 
+@media (min-width: 701px) and (max-width: 1024px) {
+    .navbar {
+        width: 92%;
+        max-width: 46rem;
+        height: 4.125rem;
+        padding: 0 1.125rem;
+        top: 1rem;
+        border-radius: 0.581rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Reset Logo Growth (Fix layout shift) */
+    .logo {
+        flex: 0 0 auto !important;
+        min-width: auto !important;
+        margin-right: 0 !important;
+    }
+
+    .logo img {
+        height: 1.625rem !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+    }
+
+    /* Restore Navigation & Profile */
+    .navigation,
+    .profile {
+        display: flex !important;
+    }
+
+    /* Hide Hamburger */
+    .actions .hamburger {
+        display: none !important;
+    }
+
+    /* Adjust Menu for Tablet portrait fit */
+    .navigation .menu {
+        gap: 1rem !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .actions .profile {
+        width: auto !important;
+        height: 1.875rem !important;
+        padding: 0 0.875rem !important;
+        border-radius: 0.4375rem !important;
+    }
+
+    .actions .profile button {
+        font-size: 0.8125rem !important;
+    }
+
+    .actions {
+        gap: 0.5rem !important;
+        flex-shrink: 0 !important;
+        justify-content: flex-end !important;
+    }
+
+    .actions .search:not(.open) {
+        width: 1.875rem !important;
+        height: 1.875rem !important;
+        border-radius: 0.4375rem !important;
+        padding: 0 !important;
+        justify-content: center !important;
+    }
+
+    .actions .search:not(.open) .searchInput {
+        display: none !important;
+    }
+
+    .actions .search.open {
+        width: 10rem !important;
+        height: 1.875rem !important;
+        padding: 0 0.75rem !important;
+    }
+
+    .actions .search img {
+        width: 0.875rem !important;
+        height: 0.875rem !important;
+    }
+
+    .actions .theme {
+        width: 1.875rem !important;
+        height: 1.875rem !important;
+        border-radius: 0.4375rem !important;
+    }
+
+    .actions .theme img,
+    .actions .theme svg {
+        width: 0.9rem !important;
+        height: 0.9rem !important;
+    }
+}
+
 @media (max-width: 700px) {
     .navbar {
         width: 90%;
@@ -414,6 +522,7 @@
         padding: 0 0.65rem;
         border-radius: 0.5rem !important;
     }
+
     logo {
         flex: 1 1 auto;
         min-width: 0;
@@ -444,6 +553,7 @@
         gap: 0.5rem;
         flex-shrink: 0 !important;
     }
+
     .actions .search,
     .actions .hamburger,
     .actions .theme {
@@ -458,6 +568,7 @@
         padding: 0 !important;
         justify-content: center !important;
     }
+
     .actions .search:not(.open) button {
         width: 100% !important;
         height: 100% !important;
@@ -492,7 +603,7 @@
         align-items: center !important;
     }
 
-    .actions .theme > * {
+    .actions .theme>* {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -608,6 +719,7 @@
 :global(.dark-theme) .actions .searchInput {
     background: none;
 }
+
 :global(.dark-theme) .actions .searchInput::placeholder {
     color: #cacaca;
     opacity: 1;
@@ -617,9 +729,11 @@
     color: #ffffff;
     caret-color: #ffffff;
 }
+
 :global(.dark-theme) .actions .search.open {
     box-shadow: 0;
 }
+
 :global(.dark-theme) .actions .theme img {
     width: 1.40625rem;
     height: 1.40625rem;
@@ -633,9 +747,11 @@
 :global(.dark-theme) .hamburger {
     background: transparent;
 }
+
 :global(.dark-theme) .hamburgerBg {
     fill: rgba(67, 67, 67, 0.87);
 }
+
 :global(.dark-theme) .hamburgerLines {
     stroke: #ffffff;
 }
