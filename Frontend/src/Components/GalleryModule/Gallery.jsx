@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+
 // LIGHT-ICONS
 import MobileIcon_light from "./GallaryAssets/mobile-light.svg";
 import TabletIcon_light from "./GallaryAssets/tablet-light.svg";
@@ -8,7 +9,6 @@ import LaptopIcon_light from "./GallaryAssets/laptop-light.svg";
 import MobileIcon_dark from "./GallaryAssets/mobile-dark.svg";
 import TabletIcon_dark from "./GallaryAssets/tablet-dark.svg";
 import LaptopIcon_dark from "./GallaryAssets/laptop-dark.svg";
-
 
 import Abstract from "./categorieItems/Abstract.svg";
 import Nature from "./categorieItems/Nature.svg";
@@ -32,12 +32,6 @@ import Footer from "../CommonModule/FooterModule/Footer";
 
 import Styles from "./Gallery.module.css";
 
-// const devices = [
-//   { id: "tablet", icon: TabletIcon, route: "/gallery/tablet" },
-//   { id: "desktop", icon: LaptopIcon, route: "/gallery/desktop" },
-//   { id: "mobile", icon: MobileIcon, route: "/gallery/mobile" },
-// ];
-
 const categories = [
   { title: "Abstract", image: Abstract },
   { title: "Nature", image: Nature },
@@ -58,16 +52,16 @@ const Gallery = () => {
   const location = useLocation();
   const activeDevice = location.pathname.split("/").pop();
 
-  const [isDark,setIsDark]=useState(
+  const [isDark, setIsDark] = useState(
     document.body.classList.contains("dark-theme")
   );
   useEffect(() => {
-    const observer= new MutationObserver(() => {
+    const observer = new MutationObserver(() => {
       setIsDark(document.body.classList.contains("dark-theme"));
     });
-    observer.observe(document.body,{attributes:true});
+    observer.observe(document.body, { attributes: true });
     return () => observer.disconnect();
-  },[]);
+  }, []);
 
   const devices = [
     {
@@ -126,6 +120,7 @@ const Gallery = () => {
 
   return (
     <>
+      {/* Single NavBar — already handles desktop + mobile via its own CSS */}
       <div className={Styles.navbarWrapper}>
         <NavBar />
       </div>
@@ -174,7 +169,7 @@ const Gallery = () => {
 
         <div className={Styles.galleryScrollArea}>
           {activeDevice === "mobile" && <Mobile />}
-          
+
           <Routes>
             <Route path="desktop" element={<Desktop />} />
             <Route path="tablet" element={<Tablet />} />
@@ -183,7 +178,7 @@ const Gallery = () => {
           <div className={Styles.footerWrapper}>
             <Footer />
           </div>
-        </div> 
+        </div>
       </div>
     </>
   );
