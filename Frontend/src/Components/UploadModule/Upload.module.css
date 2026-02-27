@@ -521,6 +521,32 @@ input[type="checkbox"].checkboxError:not(:checked) {
     transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.masonryGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wallpaperCard {
+    position: relative;
+    border-radius: 0.92675rem;
+    overflow: hidden;
+}
+
+.wallpaperImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
 :global(.dark-theme) .container {
     background: linear-gradient(180deg, #1a1d2e 0%, #0f1219 100%);
 }
@@ -727,6 +753,19 @@ input[type="checkbox"].checkboxError:not(:checked) {
         font-size: 0.875rem;
     }
 
+    .masonryGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .column {
+        gap: 1rem;
+    }
+
+    .wallpaperCard {
+        border-radius: 0.75rem;
+    }
+
     .desktopText {
         display: none;
     }
@@ -774,5 +813,17 @@ input[type="checkbox"].checkboxError:not(:checked) {
     .aspectIcon {
         width: 14px;
         height: 14px;
+    }
+
+    .masonryGrid {
+        gap: 0.75rem;
+    }
+
+    .column {
+        gap: 0.75rem;
+    }
+
+    .wallpaperCard {
+        border-radius: 0.625rem;
     }
 }
