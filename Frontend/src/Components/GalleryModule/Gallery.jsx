@@ -97,6 +97,83 @@ const Gallery = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  
+  // Navbar Scroll Logic
+  // Navbar Scroll Logic
+  const navbarRef = useRef(null);
+  const scrollAreaRef = useRef(null);
+  const contentWrapperRef = useRef(null);
+  const navbarScrollPos = useRef(0);
+
+  // Sequential Scroll Logic (Non-passive listener to control event)
+  useEffect(() => {
+    const handleWheelSeq = (e) => {
+      // Prevent default browser scrolling
+      e.preventDefault();
+
+      const delta = e.deltaY;
+      const maxScroll = 250;
+      const maxContentScroll = 120;
+      const scrollArea = scrollAreaRef.current;
+
+      if (!navbarRef.current || !contentWrapperRef.current || !scrollArea) return;
+
+      // Current State
+      let currentNavPos = navbarScrollPos.current;
+      let currentContentScroll = scrollArea.scrollTop;
+
+      // Logic:
+      // Scroll DOWN (delta > 0): Navbar Shrinks FIRST -> Then Content Scrolls
+      // Scroll UP (delta < 0): Navbar Expands FIRST -> Then Content Scrolls Up
+
+      const navbarShrinkSpeed = 0.8;
+      const navbarExpandSpeed = 1.5; // Fast expansion
+      const contentSpeed = 0.25; // Even slower content scroll
+
+      if (delta > 0) {
+        // SCROLLING DOWN
+        if (currentNavPos < maxScroll) {
+          // Priority 1: Shrink Navbar
+          currentNavPos += delta * navbarShrinkSpeed;
+          currentNavPos = Math.min(currentNavPos, maxScroll);
+        } else {
+          // Priority 2: Scroll Content
+          scrollArea.scrollTop += delta * contentSpeed;
+        }
+      } else {
+        // SCROLLING UP
+        if (currentNavPos > 0) {
+          // Priority 1: Expand Navbar immediately
+          currentNavPos += delta * navbarExpandSpeed;
+          currentNavPos = Math.max(currentNavPos, 0);
+        } else {
+          // Priority 2: Scroll Content Up (only if navbar is fully expanded)
+          scrollArea.scrollTop += delta * contentSpeed;
+        }
+      }
+
+      // Update Refs/State
+      navbarScrollPos.current = currentNavPos;
+
+      // Apply Animations based on new NavPos
+      const progress = currentNavPos / maxScroll;
+      navbarRef.current.style.setProperty("--scroll-progress", progress);
+
+      const contentTranslate = progress * -maxContentScroll;
+      contentWrapperRef.current.style.setProperty(
+        "--header-margin-top",
+        `${contentTranslate}px`
+      );
+    };
+
+    // Attach non-passive listener to window or container
+    // Attaching to window ensures we catch it everywhere (including over navbar)
+    window.addEventListener("wheel", handleWheelSeq, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheelSeq);
+    };
+  }, []);
 
   const handleMouseDown = (e) => {
     if (!sliderRef.current) return;
@@ -126,64 +203,67 @@ const Gallery = () => {
 
   return (
     <>
-      <div className={Styles.navbarWrapper}>
-        <NavBar />
-      </div>
+      <NavBar className={Styles.galleryNavbar} ref={navbarRef} />
 
+      {/* Main Scroll Container */}
       <div className={Styles.container}>
-        {/* Device Selector */}
-        <div className={Styles.deviceSelector}>
-          {devices.map(({ id, icon: Icon, route }) => {
-            const isActive = activeDevice === id;
-            const isAnyActive = devices.some((d) => d.id === activeDevice);
-            const shouldBlur = isAnyActive && !isActive;
+        
+        {/* Scrollable Content Wrapper */}
+        <div className={Styles.contentWrapper} ref={contentWrapperRef}>
+          {/* Device Selector */}
+          <div className={Styles.deviceSelector}>
+            {devices.map(({ id, icon: Icon, route }) => {
+              const isActive = activeDevice === id;
+              const isAnyActive = devices.some((d) => d.id === activeDevice);
+              const shouldBlur = isAnyActive && !isActive;
 
-            return (
-              <button
-                key={id}
-                onClick={() => navigate(route)}
-                className={`${Styles.deviceBtn} ${isActive ? Styles.active : ""} ${shouldBlur ? Styles.blurred : ""}`}
-              >
-                <img src={Icon} alt={id} width={34} height={34} />
-              </button>
-            );
-          })}
-        </div>
+              return (
+                <button
+                  key={id}
+                  onClick={() => navigate(route)}
+                  className={`${Styles.deviceBtn} ${isActive ? Styles.active : ""} ${shouldBlur ? Styles.blurred : ""}`}
+                >
+                  <img src={Icon} alt={id} width={34} height={34} />
+                </button>
+              );
+            })}
+          </div>
 
-        <div className={Styles.temp}>
-          {/* Categories */}
-          <div
-            ref={sliderRef}
-            className={Styles.scrollItems}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          >
-            {categories.map((cat, index) => (
-              <div
-                key={index}
-                className={Styles.categoryCard}
-                style={{ backgroundImage: `url(${cat.image})` }}
-              >
-                <span className={Styles.categoryTitle}>{cat.title}</span>
-              </div>
-            ))}
+          <div className={Styles.temp}>
+            {/* Categories */}
+            <div
+              ref={sliderRef}
+              className={Styles.scrollItems}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
+            >
+              {categories.map((cat, index) => (
+                <div
+                  key={index}
+                  className={Styles.categoryCard}
+                  style={{ backgroundImage: `url(${cat.image})` }}
+                >
+                  <span className={Styles.categoryTitle}>{cat.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={Styles.galleryScrollArea} ref={scrollAreaRef}>
+            {activeDevice === "mobile" && <Mobile />}
+            
+            <Routes>
+              <Route path="desktop" element={<Desktop />} />
+              <Route path="tablet" element={<Tablet />} />
+            </Routes>
+            
+            <div className={Styles.footerWrapper}>
+              <Footer />
+            </div>
           </div>
         </div>
-
-        <div className={Styles.galleryScrollArea}>
-          {activeDevice === "mobile" && <Mobile />}
-          
-          <Routes>
-            <Route path="desktop" element={<Desktop />} />
-            <Route path="tablet" element={<Tablet />} />
-          </Routes>
-
-          <div className={Styles.footerWrapper}>
-            <Footer />
-          </div>
-        </div> 
       </div>
     </>
   );

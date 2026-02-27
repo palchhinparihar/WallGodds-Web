@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import Style from "./NavBar.module.css";
 import ThemeToggle from "../../ThemeModule/ThemeToggle";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 
-const NavBar = () => {
+const NavBar = forwardRef(({ className }, ref) => {
     const [searchOpen, setSearchOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchText, setSearchText] = useState("");
@@ -29,7 +29,7 @@ const NavBar = () => {
     }, [isDark]);
 
     return (
-        <div className={Style.navbar}>
+        <div ref={ref} className={`${Style.navbar} ${className || ""}`}>
             <div className={Style.logo}>
                 <NavLink to="/">
                     <img src={Logo} alt="WallGodds Logo" data-logo />
@@ -178,6 +178,6 @@ const NavBar = () => {
             )}
         </div>
     );
-};
+});
 
 export default NavBar;

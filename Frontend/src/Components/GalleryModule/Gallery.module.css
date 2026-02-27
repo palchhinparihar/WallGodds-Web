@@ -13,6 +13,28 @@
   display: block;
 }
 
+/* Navbar Animation State for Gallery */
+.galleryNavbar {
+  --translate-y: calc(var(--scroll-progress, 0) * -95%);
+  --scale-val: calc(1 - (var(--scroll-progress, 0) * 0.17));
+  
+  transform: translateY(var(--translate-y)) scale(var(--scale-val));
+  transform-origin: top center;
+  
+  transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+  --navbar-bg-rgb: 255, 255, 255;
+  --navbar-start-alpha: 0.23;
+  --bg-alpha: calc(var(--navbar-start-alpha) + (0.52 * var(--scroll-progress, 0)));
+  background: rgba(var(--navbar-bg-rgb), var(--bg-alpha)) !important;
+}
+
+:global(.dark-theme) .galleryNavbar {
+  --navbar-bg-rgb: 0, 0, 0;
+  --navbar-start-alpha: 0.38;
+}
+
 .footerWrapper {
   display: block;
 }
@@ -34,6 +56,17 @@
 
 .container::-webkit-scrollbar {
   display: none;
+}
+
+.contentWrapper {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--header-margin-top, 0px);
+  transition: margin-top 0.1s ease-out;
 }
 
 .temp {
@@ -139,7 +172,7 @@
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin: 10px 0px 15px 0px ;
+  margin: 0px 0px 15px 0px;
   position: relative;
   z-index: 100;
 }
