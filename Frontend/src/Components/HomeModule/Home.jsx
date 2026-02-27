@@ -49,7 +49,7 @@ const Home = () => {
                 <div className={Styles.footerWrapper}>
                     <Footer />
                 </div>
-{/*             
+                {/*             
                 <button 
                     onClick={() => navigate("/signin")}
                     style={{

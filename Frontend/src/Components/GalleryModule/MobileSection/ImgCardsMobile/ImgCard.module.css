@@ -1,12 +1,35 @@
 .imgCard {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
 }
 
 .image {
   width: 100%;
-  height: 520px; /* 🔥 new height */
+  height: 520px;
   object-fit: cover;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .imgCard {
+    border-radius: 1rem;
+  }
+
+  .image {
+    height: auto;
+    aspect-ratio: 9/16;
+  }
+}
+
+@media (max-width: 425px) {
+  .imgCard {
+    border-radius: 0.875rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .imgCard {
+    border-radius: 0.75rem;
+  }
 }

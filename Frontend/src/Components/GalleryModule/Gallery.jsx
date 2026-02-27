@@ -58,16 +58,16 @@ const Gallery = () => {
   const location = useLocation();
   const activeDevice = location.pathname.split("/").pop();
 
-  const [isDark,setIsDark]=useState(
+  const [isDark, setIsDark] = useState(
     document.body.classList.contains("dark-theme")
   );
   useEffect(() => {
-    const observer= new MutationObserver(() => {
+    const observer = new MutationObserver(() => {
       setIsDark(document.body.classList.contains("dark-theme"));
     });
-    observer.observe(document.body,{attributes:true});
+    observer.observe(document.body, { attributes: true });
     return () => observer.disconnect();
-  },[]);
+  }, []);
 
   const devices = [
     {
