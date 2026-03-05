@@ -251,7 +251,7 @@
     height: 100%;
 }
 
-/* Tablet Portrait + Landscape - Fixed dimensions like Footer */
+/* Tablet Portrait + Landscape */
 @media (min-width: 701px) and (max-width: 1195px) {
     .navbar {
         width: 43.125rem;
