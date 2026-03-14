@@ -123,7 +123,17 @@
 }
 
 :global(.dark-theme) .input option {
-    background-color: #252525;
+    background-color: #2c2b2b; 
+    color: white;
+}
+
+:global(.dark-theme) .input option:checked {
+    background-color: #3E4B72;
+    color: white;
+}
+
+:global(.dark-theme) .input option:hover {
+    background-color: #3E4B72;
     color: white;
 }
 
